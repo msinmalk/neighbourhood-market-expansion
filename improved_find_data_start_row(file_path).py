@@ -1,3 +1,7 @@
+# %load improved_find_data_start_row\(file_path\).py
+from openpyxl import load_workbook
+import pandas as pd
+
 def improved_find_data_start_row(file_path):
     """
     Improved version to find the data start row in an Excel file.
@@ -25,7 +29,7 @@ def improved_find_data_start_row(file_path):
         
         # If we find 2 consecutive rows that look like data, it's likely the start of the data
         if consecutive_data_like_rows >= 2:
-            likely_data_start_row = i - 1  # Adjusting for 0-based index and to include the first data-like row
+            likely_data_start_row = i - 2  # Adjusting for 0-based index and to include the first data-like row
             break
     
     return likely_data_start_row
@@ -37,6 +41,7 @@ def improved_load_excel_with_autodetect(file_path):
     """
     start_row = improved_find_data_start_row(file_path)
     df = pd.read_excel(file_path, sheet_name=0, skiprows=start_row)
+    df.dropna(axis=1, how='all', inplace=True)
     return df
 
 def load_all_sheets_with_data_start_detection(file_path):
