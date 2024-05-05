@@ -1,6 +1,5 @@
-
-
 import pandas as pd
+import numpy as np
 
 def clean_cashflow_data(cashflow_data):
     # Replace a special character in the first column

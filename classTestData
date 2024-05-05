@@ -1,9 +1,0 @@
-financials = {'Revenue': 1000000, 'Capital Expenditures': 150000, 'Operating Expenses': 200000}
-store_data = {'NeighborhoodMarket': {'locations': 50, 'average_labor_cost': 30000, 'current_distribution_sqft': 50000}}
-prob_matrix = [[0.7, 0.3], [0.4, 0.6]]  # Assuming two store types for simplicity
-distances = [5, 10, 15]  # Distance to three different population centers
-densities = [1000, 1500, 1200]
-avg_spending_per_visitor = {'NeighborhoodMarket': 45.50, 'Supercenter': 80.75}
-financial_forecast = {'Revenue Forecast': 1200000, 'Capital Expenditures Forecast': 200000}
-regression_results = {'sqft_per_store': 1500, 'cost_per_sqft': 10}
-market_conditions = {'community_opposition': 0.5, 'cannibalization_rate': 0.01, 'ecommerce_growth_factor': 0.03}
