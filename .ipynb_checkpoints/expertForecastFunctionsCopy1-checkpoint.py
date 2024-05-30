@@ -322,7 +322,10 @@ def calculate_forecasts(historical_ratios, forecast_years, future_bases, base_ma
         forecasts[metric] = corrected_projected * future_bases[base].loc[forecast_years].values
         projected_ratios[metric] = corrected_projected
 
-    return forecasts, projected_ratios
+    forecast_df = pd.DataFrame(forecasts, index=forecast_years)
+    projected_ratios_df = pd.DataFrame(projected_ratios, index=forecast_years) * 100
+    
+    return forecast_df, projected_ratios_df
 
 def ratio_forecast_regression(df, historical_regression_forecast, base_mapping, forecast_years):
     future_bases = {base: historical_regression_forecast.loc[base] for base in set(base_mapping.values())}
@@ -331,14 +334,11 @@ def ratio_forecast_regression(df, historical_regression_forecast, base_mapping, 
 
     forecasts, projected_ratios = calculate_forecasts(historical_ratios, forecast_years, future_bases, base_mapping)
     
-    forecast_df = pd.DataFrame(forecasts, index=forecast_years)
-    projected_ratios_df = pd.DataFrame(projected_ratios, index=forecast_years) * 100
-    
-    # result_forecast = pd.DataFrame([{'Financial Metric': metric, 'Year': year, 'Value': value}
-    #                                 for (metric, year), value in forecasts.items()]).pivot(
-    #     index='Financial Metric', columns='Year', values='Value')
-    # result_percentages = pd.DataFrame([{'Financial Metric': metric, 'Year': year, 'Value': value}
-    #                                    for metric, year, value in projected_ratios.items()]).pivot(
-    #     index='Financial Metric', columns='Year', values='Value') * 100
+    result_forecast = pd.DataFrame([{'Financial Metric': metric, 'Year': year, 'Value': value}
+                                    for (metric, year), value in forecasts.items()]).pivot(
+        index='Financial Metric', columns='Year', values='Value')
+    result_percentages = pd.DataFrame([{'Financial Metric': metric, 'Year': year, 'Value': value}
+                                       for (metric, year), value in projected_ratios.items()]).pivot(
+        index='Financial Metric', columns='Year', values='Value') * 100
 
-    return forecast_df, projected_ratios_df
+    return result_forecast, result_percentages

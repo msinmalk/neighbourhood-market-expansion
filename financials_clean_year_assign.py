@@ -32,13 +32,19 @@ def update_column_names(cashflow_data, base_year, index_name):
     
     # Strip whitespace from the 'Cash Metric' column
     cashflow_data.index=cashflow_data[index_name]
-    cashflow_data=cashflow_data.drop([index_name])
+    if index_name in cashflow_data.columns:
+        cashflow_data=cashflow_data.drop(columns=[index_name])
     
     return cashflow_data
 
 
-def pivot_year_columns_to_rows(df,pivot_column):
-    df_pivot = df.pivot_table(values=df.columns[1:],columns=df[pivot_column])
+def pivot_year_columns_to_rows(df,pivot_column=None):
+    if pivot_column==None or pivot_column==df.index.name:
+        df_pivot = df.pivot_table(values=df.columns[1:],columns=df.index)
+    #if pivot_column==df.index.name:
+    #    df_pivot = df.pivot_table(values=df.columns[1:],columns=df.index)
+    else:
+        df_pivot = df.pivot_table(values=df.columns[1:],columns=df[pivot_column])
     if pivot_column == "Year":
         df_pivot.columns.name="Columns"
         df_pivot.index.name="Year"

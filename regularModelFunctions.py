@@ -207,8 +207,7 @@ def linear_regression_forecast(df, forecast_years, transform_if_needed=True):
 
     # Calculate CAGR for the forecast period
     historical_cagr_values = (historical_regression_forecast[forecast_years].astype(float).iloc[:, -1] / 
-                              historical_regression_forecast[forecast_years].astype(float).iloc[:, 0]) ** 
-                              (1 / (len(forecast_years) - 1)) - 1
+                              historical_regression_forecast[forecast_years].astype(float).iloc[:, 0]) ** (1 / (len(forecast_years) - 1)) - 1
     historical_regression_forecast.loc[:, 'CAGR'] = historical_cagr_values * 100
 
     return historical_regression_forecast
